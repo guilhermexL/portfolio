@@ -1,177 +1,400 @@
-// Theme Toggle Functionality
-class ThemeManager {
-	constructor() {
-		this.themeToggle = document.getElementById('themeToggle');
-		this.themeIcon = this.themeToggle.querySelector('.theme-icon');
-		this.currentTheme = this.getStoredTheme() || this.getPreferredTheme();
-		this.init();
-	}
+// Dicionário de traduções
+const translations = {
+    pt: {
+        'page-title': 'Guilherme Santos - Desenvolvedor de Software',
+        'nav-about': 'Sobre',
+        'nav-projects': 'Projetos',
+        'nav-skills': 'Habilidades',
+        'nav-contact': 'Contato',
+        'about-title': 'Sobre Mim',
+        'about-description': 'Sou um desenvolvedor full stack apaixonado por tecnologia, com mais de 2 anos de experiência criando soluções robustas e escaláveis. Especializado em Java, Spring Boot e arquiteturas cloud na AWS, busco sempre entregar código limpo e eficiente.',
+        'about-description-2': 'Quando não estou codando, gosto de estudar novas tecnologias, contribuir para projetos open source e compartilhar conhecimento com a comunidade de desenvolvedores.',
+        'projects-title': 'Projetos',
+        'project1-title': 'Sistema de E-commerce',
+        'project1-description': 'Plataforma completa de e-commerce desenvolvida com Spring Boot, PostgreSQL e AWS. Inclui sistema de pagamentos, gestão de estoque e painel administrativo.',
+        'project2-title': 'API de Gerenciamento de Tarefas',
+        'project2-description': 'REST API robusta para gerenciamento de tarefas com autenticação JWT, documentação Swagger e deploy automatizado via Docker.',
+        'project-link': 'Ver Projeto →',
+        'skills-title': 'Habilidades',
+        'skills-backend': 'Backend',
+        'skills-database': 'Banco de Dados',
+        'skills-cloud': 'Cloud & DevOps',
+        'skills-tools': 'Ferramentas',
+        'contact-title': 'Contato',
+        'contact-description': 'Interessado em trabalhar juntos? Entre em contato comigo através do formulário ou pelas redes sociais. Vamos conversar sobre seu próximo projeto!',
+        'form-name': 'Nome',
+        'form-email': 'Email',
+        'form-message': 'Mensagem',
+        'form-submit': 'Enviar Mensagem',
+        'form-success': '✓ Mensagem enviada com sucesso! Entrarei em contato em breve.',
+        'footer-copyright': '© 2025 Guilherme Santos. Todos os direitos reservados.'
+    },
+    en: {
+        'page-title': 'Guilherme Santos - Software Developer',
+        'nav-about': 'About',
+        'nav-projects': 'Projects',
+        'nav-skills': 'Skills',
+        'nav-contact': 'Contact',
+        'about-title': 'About Me',
+        'about-description': 'I am a technology-passionate full stack developer with over 2 years of experience creating robust and scalable solutions. Specialized in Java, Spring Boot and AWS cloud architectures, I always strive to deliver clean and efficient code.',
+        'about-description-2': 'When I\'m not coding, I enjoy studying new technologies, contributing to open source projects and sharing knowledge with the developer community.',
+        'projects-title': 'Projects',
+        'project1-title': 'E-commerce System',
+        'project1-description': 'Complete e-commerce platform developed with Spring Boot, PostgreSQL and AWS. Includes payment system, inventory management and administrative panel.',
+        'project2-title': 'Task Management API',
+        'project2-description': 'Robust REST API for task management with JWT authentication, Swagger documentation and automated deployment via Docker.',
+        'project-link': 'View Project →',
+        'skills-title': 'Skills',
+        'skills-backend': 'Backend',
+        'skills-database': 'Database',
+        'skills-cloud': 'Cloud & DevOps',
+        'skills-tools': 'Tools',
+        'contact-title': 'Contact',
+        'contact-description': 'Interested in working together? Get in touch with me through the form or social media. Let\'s talk about your next project!',
+        'form-name': 'Name',
+        'form-email': 'Email',
+        'form-message': 'Message',
+        'form-submit': 'Send Message',
+        'form-success': '✓ Message sent successfully! I will get in touch soon.',
+        'footer-copyright': '© 2025 Guilherme Santos. All rights reserved.'
+    }
+};
 
-	init() {
-		// Set initial theme
-		this.setTheme(this.currentTheme);
+// Estado atual do idioma
+let currentLanguage = 'pt';
 
-		// Add event listener
-		this.themeToggle.addEventListener('click', () => {
-			this.toggleTheme();
-		});
+// Elementos DOM
+const languageToggle = document.getElementById('languageToggle');
+const navToggle = document.getElementById('navToggle');
+const navList = document.getElementById('navList');
+const contactForm = document.getElementById('contactForm');
+const successMessage = document.getElementById('successMessage');
 
-		// Listen for system theme changes
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-			if (!this.getStoredTheme()) {
-				this.setTheme(e.matches ? 'dark' : 'light');
-			}
-		});
-	}
-
-	getStoredTheme() {
-		return localStorage.getItem('theme');
-	}
-
-	getPreferredTheme() {
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	}
-
-	setTheme(theme) {
-		this.currentTheme = theme;
-		document.documentElement.setAttribute('data-theme', theme);
-		this.updateThemeIcon(theme);
-		localStorage.setItem('theme', theme);
-	}
-
-	toggleTheme() {
-		const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-		this.setTheme(newTheme);
-	}
-
-	updateThemeIcon(theme) {
-		this.themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
-	}
-}
-
-// Smooth scrolling for navigation links
-class SmoothScroll {
-	constructor() {
-		this.init();
-	}
-
-	init() {
-		// Add smooth scrolling to all anchor links
-		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-			anchor.addEventListener('click', (e) => {
-				e.preventDefault();
-				const target = document.querySelector(anchor.getAttribute('href'));
-				if (target) {
-					const headerHeight = document.querySelector('.header').offsetHeight;
-					const targetPosition = target.offsetTop - headerHeight - 20;
-					window.scrollTo({
-						top: targetPosition,
-						behavior: 'smooth'
-					});
-				}
-			});
-		});
-	}
-}
-
-// Header scroll effect
-class HeaderScroll {
-	constructor() {
-		this.header = document.querySelector('.header');
-		this.init();
-	}
-
-	init() {
-		window.addEventListener('scroll', () => {
-			if (window.scrollY > 100) {
-				this.header.style.backgroundColor = 'var(--bg-primary)';
-				this.header.style.boxShadow = 'var(--shadow-light)';
-			} else {
-				this.header.style.backgroundColor = 'var(--bg-primary)';
-				this.header.style.boxShadow = 'none';
-			}
-		});
-	}
-}
-
-// Intersection Observer for animations
-class AnimationObserver {
-	constructor() {
-		this.init();
-	}
-
-	init() {
-		const observerOptions = {
-			threshold: 0.1,
-			rootMargin: '0px 0px -50px 0px'
-		};
-
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					entry.target.style.opacity = '1';
-					entry.target.style.transform = 'translateY(0)';
-				}
-			});
-		}, observerOptions);
-
-		// Observe project cards
-		document.querySelectorAll('.project-card').forEach(card => {
-			card.style.opacity = '0';
-			card.style.transform = 'translateY(20px)';
-			card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-			observer.observe(card);
-		});
-	}
-}
-
-// Copy email functionality
-class EmailCopy {
-	constructor() {
-		this.init();
-	}
-
-	init() {
-		const emailLink = document.querySelector('a[href^="mailto:"]');
-		if (emailLink) {
-			emailLink.addEventListener('click', (e) => {
-				e.preventDefault();
-				const email = emailLink.href.replace('mailto:', '');
-				if (navigator.clipboard) {
-					navigator.clipboard.writeText(email).then(() => {
-						this.showCopyFeedback(emailLink);
-					});
-				} else {
-					// Fallback for older browsers
-					window.location.href = emailLink.href;
-				}
-			});
-		}
-	}
-
-	showCopyFeedback(element) {
-		const originalText = element.querySelector('span:last-child').textContent;
-		element.querySelector('span:last-child').textContent = 'Email copied!';
-		setTimeout(() => {
-			element.querySelector('span:last-child').textContent = originalText;
-		}, 2000);
-	}
-}
-
-// Initialize all functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-	new ThemeManager();
-	new SmoothScroll();
-	new HeaderScroll();
-	new AnimationObserver();
-	new EmailCopy();
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    initializeLanguageToggle();
+    initializeNavigation();
+    initializeContactForm();
+    initializeSmoothScrolling();
 });
 
-// Add loading animation
-window.addEventListener('load', () => {
-	document.body.style.opacity = '1';
+/**
+ * Inicializa o sistema de alternância de idiomas
+ */
+function initializeLanguageToggle() {
+    // Event listener para o botão de alternância de idioma
+    languageToggle.addEventListener('click', function() {
+        toggleLanguage();
+    });
+    
+    // Event listeners para as opções de idioma individuais
+    const langOptions = languageToggle.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const selectedLang = this.getAttribute('data-lang');
+            if (selectedLang !== currentLanguage) {
+                setLanguage(selectedLang);
+            }
+        });
+    });
+}
+
+/**
+ * Alterna entre os idiomas disponíveis
+ */
+function toggleLanguage() {
+    const newLanguage = currentLanguage === 'pt' ? 'en' : 'pt';
+    setLanguage(newLanguage);
+}
+
+/**
+ * Define o idioma ativo e atualiza a interface
+ * @param {string} language - Código do idioma ('pt' ou 'en')
+ */
+function setLanguage(language) {
+    if (!translations[language]) {
+        console.error('Idioma não suportado:', language);
+        return;
+    }
+    
+    currentLanguage = language;
+    
+    // Atualiza o estado visual do botão de idioma
+    updateLanguageToggleState();
+    
+    // Atualiza todos os textos da página
+    updatePageTexts();
+    
+    // Atualiza o atributo lang do HTML
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en-US';
+    
+    // Salva a preferência no localStorage
+    localStorage.setItem('preferredLanguage', language);
+}
+
+/**
+ * Atualiza o estado visual do botão de alternância de idioma
+ */
+function updateLanguageToggleState() {
+    const langOptions = languageToggle.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        const optionLang = option.getAttribute('data-lang');
+        if (optionLang === currentLanguage) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
+}
+
+/**
+ * Atualiza todos os textos da página com base no idioma atual
+ */
+function updatePageTexts() {
+    const elementsToTranslate = document.querySelectorAll('[data-translate]');
+    
+    elementsToTranslate.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        const translation = translations[currentLanguage][key];
+        
+        if (translation) {
+            // Verifica se é um elemento de input/textarea para atualizar placeholder
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = translation;
+            } else {
+                element.textContent = translation;
+            }
+        } else {
+            console.warn('Tradução não encontrada para a chave:', key);
+        }
+    });
+}
+
+/**
+ * Inicializa a navegação mobile
+ */
+function initializeNavigation() {
+    // Toggle do menu mobile
+    navToggle.addEventListener('click', function() {
+        navList.classList.toggle('active');
+        
+        // Animação do ícone hambúrguer
+        this.classList.toggle('active');
+    });
+    
+    // Fecha o menu ao clicar em um link (mobile)
+    const navLinks = navList.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navList.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
+    
+    // Fecha o menu ao clicar fora dele
+    document.addEventListener('click', function(e) {
+        if (!navToggle.contains(e.target) && !navList.contains(e.target)) {
+            navList.classList.remove('active');
+            navToggle.classList.remove('active');
+        }
+    });
+}
+
+/**
+ * Inicializa o formulário de contato
+ */
+function initializeContactForm() {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Coleta os dados do formulário
+        const formData = new FormData(this);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+        
+        // Validação básica
+        if (!validateForm(data)) {
+            return;
+        }
+        
+        // Simula o envio do formulário
+        submitForm(data);
+    });
+}
+
+/**
+ * Valida os dados do formulário
+ * @param {Object} data - Dados do formulário
+ * @returns {boolean} - True se válido, false caso contrário
+ */
+function validateForm(data) {
+    // Validação do nome
+    if (!data.name || data.name.trim().length < 2) {
+        showFormError('Nome deve ter pelo menos 2 caracteres');
+        return false;
+    }
+    
+    // Validação do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!data.email || !emailRegex.test(data.email)) {
+        showFormError('Por favor, insira um email válido');
+        return false;
+    }
+    
+    // Validação da mensagem
+    if (!data.message || data.message.trim().length < 10) {
+        showFormError('Mensagem deve ter pelo menos 10 caracteres');
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Exibe uma mensagem de erro do formulário
+ * @param {string} message - Mensagem de erro
+ */
+function showFormError(message) {
+    // Remove mensagem de erro anterior se existir
+    const existingError = document.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Cria e exibe nova mensagem de erro
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = `
+        background-color: #d32f2f;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-top: 1rem;
+        text-align: center;
+    `;
+    errorDiv.textContent = message;
+    
+    contactForm.appendChild(errorDiv);
+    
+    // Remove a mensagem após 5 segundos
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}
+
+/**
+ * Simula o envio do formulário
+ * @param {Object} data - Dados do formulário
+ */
+function submitForm(data) {
+    // Desabilita o botão de envio
+    const submitBtn = contactForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = currentLanguage === 'pt' ? 'Enviando...' : 'Sending...';
+    
+    // Simula delay de envio
+    setTimeout(() => {
+        // Exibe mensagem de sucesso
+        successMessage.classList.add('show');
+        
+        // Limpa o formulário
+        contactForm.reset();
+        
+        // Restaura o botão
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        
+        // Remove a mensagem de sucesso após 5 segundos
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+        }, 5000);
+        
+        // Log dos dados (em produção, aqui seria feita a requisição real)
+        console.log('Dados do formulário enviados:', data);
+        
+    }, 1500);
+}
+
+/**
+ * Inicializa o scroll suave para links de navegação
+ */
+function initializeSmoothScrolling() {
+    // Adiciona comportamento de scroll suave para links internos
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    
+    internalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+/**
+ * Carrega a preferência de idioma salva
+ */
+function loadSavedLanguage() {
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    if (savedLanguage && translations[savedLanguage]) {
+        setLanguage(savedLanguage);
+    }
+}
+
+// Carrega idioma salvo quando a página carrega
+document.addEventListener('DOMContentLoaded', loadSavedLanguage);
+
+// Adiciona listener para mudanças de tamanho da tela
+window.addEventListener('resize', function() {
+    // Fecha o menu mobile se a tela ficar grande
+    if (window.innerWidth > 768) {
+        navList.classList.remove('active');
+        navToggle.classList.remove('active');
+    }
 });
 
-// Initial body opacity for loading effect
-document.body.style.opacity = '0';
-document.body.style.transition = 'opacity 0.3s ease';
+// Adiciona efeito de parallax sutil no scroll (opcional)
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const sections = document.querySelectorAll('.section');
+    
+    sections.forEach(section => {
+        const rate = scrolled * -0.5;
+        section.style.transform = `translateY(${rate}px)`;
+    });
+});
+
+// Função utilitária para debounce (otimização de performance)
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Aplica debounce ao evento de resize
+window.addEventListener('resize', debounce(function() {
+    // Recalcula layouts se necessário
+    console.log('Tela redimensionada');
+}, 250));
