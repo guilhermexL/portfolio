@@ -3,12 +3,17 @@ const translations = {
     pt: {
         'page-title': 'Guilherme Santos - Desenvolvedor de Software',
         'nav-about': 'Sobre',
+        'nav-xp': 'Experiência',
+        'nav-education': 'Formação',
         'nav-projects': 'Projetos',
         'nav-skills': 'Habilidades',
         'nav-contact': 'Contato',
         'about-title': 'Sobre Mim',
-        'about-description': 'Sou um desenvolvedor full stack apaixonado por tecnologia, com mais de 2 anos de experiência criando soluções robustas e escaláveis. Especializado em Java, Spring Boot e arquiteturas cloud na AWS, busco sempre entregar código limpo e eficiente.',
-        'about-description-2': 'Quando não estou codando, gosto de estudar novas tecnologias, contribuir para projetos open source e compartilhar conhecimento com a comunidade de desenvolvedores.',
+        'about-description': 'Sou um desenvolvedor backend apaixonado por tecnologia, criando soluções robustas e escaláveis. Especializado em Java, Spring Boot e arquiteturas cloud na AWS, busco sempre entregar código limpo e eficiente.',
+        'about-description-2': 'Quando não estou codando, gosto de estudar novas tecnologias, contribuir para projetos open source e adquirir conhecimento com a comunidade de desenvolvedores.',
+        'cv-title' : 'Currículo',
+        'xp-title': 'Experiência',
+        'about-education' : 'Formação',
         'projects-title': 'Projetos',
         'project1-title': 'Sistema de E-commerce',
         'project1-description': 'Plataforma completa de e-commerce desenvolvida com Spring Boot, PostgreSQL e AWS. Inclui sistema de pagamentos, gestão de estoque e painel administrativo.',
@@ -21,7 +26,7 @@ const translations = {
         'skills-cloud': 'Cloud & DevOps',
         'skills-tools': 'Ferramentas',
         'contact-title': 'Contato',
-        'contact-description': 'Interessado em trabalhar juntos? Entre em contato comigo através do formulário ou pelas redes sociais. Vamos conversar sobre seu próximo projeto!',
+        'contact-description': 'Entre em contato comigo através do formulário ou pelas redes sociais.',
         'form-name': 'Nome',
         'form-email': 'Email',
         'form-message': 'Mensagem',
@@ -32,12 +37,17 @@ const translations = {
     en: {
         'page-title': 'Guilherme Santos - Software Developer',
         'nav-about': 'About',
+        'nav-xp': 'Experience',
+        'nav-education': 'Trainning',
         'nav-projects': 'Projects',
         'nav-skills': 'Skills',
         'nav-contact': 'Contact',
         'about-title': 'About Me',
-        'about-description': 'I am a technology-passionate full stack developer with over 2 years of experience creating robust and scalable solutions. Specialized in Java, Spring Boot and AWS cloud architectures, I always strive to deliver clean and efficient code.',
+        'about-description': 'I am a technology-passionate backend developer creating robust and scalable solutions. Specialized in Java, Spring Boot and AWS cloud architectures, I always strive to deliver clean and efficient code.',
         'about-description-2': 'When I\'m not coding, I enjoy studying new technologies, contributing to open source projects and sharing knowledge with the developer community.',
+        'cv-title' : 'Resume',
+        'xp-title': 'Experience',
+        'about-education' : 'Graduate',
         'projects-title': 'Projects',
         'project1-title': 'E-commerce System',
         'project1-description': 'Complete e-commerce platform developed with Spring Boot, PostgreSQL and AWS. Includes payment system, inventory management and administrative panel.',
@@ -71,7 +81,7 @@ const contactForm = document.getElementById('contactForm');
 const successMessage = document.getElementById('successMessage');
 
 // Inicialização quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeLanguageToggle();
     initializeNavigation();
     initializeContactForm();
@@ -83,14 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initializeLanguageToggle() {
     // Event listener para o botão de alternância de idioma
-    languageToggle.addEventListener('click', function() {
+    languageToggle.addEventListener('click', function () {
         toggleLanguage();
     });
-    
+
     // Event listeners para as opções de idioma individuais
     const langOptions = languageToggle.querySelectorAll('.lang-option');
     langOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
+        option.addEventListener('click', function (e) {
             e.stopPropagation();
             const selectedLang = this.getAttribute('data-lang');
             if (selectedLang !== currentLanguage) {
@@ -117,18 +127,18 @@ function setLanguage(language) {
         console.error('Idioma não suportado:', language);
         return;
     }
-    
+
     currentLanguage = language;
-    
+
     // Atualiza o estado visual do botão de idioma
     updateLanguageToggleState();
-    
+
     // Atualiza todos os textos da página
     updatePageTexts();
-    
+
     // Atualiza o atributo lang do HTML
     document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en-US';
-    
+
     // Salva a preferência no localStorage
     localStorage.setItem('preferredLanguage', language);
 }
@@ -153,11 +163,11 @@ function updateLanguageToggleState() {
  */
 function updatePageTexts() {
     const elementsToTranslate = document.querySelectorAll('[data-translate]');
-    
+
     elementsToTranslate.forEach(element => {
         const key = element.getAttribute('data-translate');
         const translation = translations[currentLanguage][key];
-        
+
         if (translation) {
             // Verifica se é um elemento de input/textarea para atualizar placeholder
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
@@ -176,24 +186,24 @@ function updatePageTexts() {
  */
 function initializeNavigation() {
     // Toggle do menu mobile
-    navToggle.addEventListener('click', function() {
+    navToggle.addEventListener('click', function () {
         navList.classList.toggle('active');
-        
+
         // Animação do ícone hambúrguer
         this.classList.toggle('active');
     });
-    
+
     // Fecha o menu ao clicar em um link (mobile)
     const navLinks = navList.querySelectorAll('a');
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             navList.classList.remove('active');
             navToggle.classList.remove('active');
         });
     });
-    
+
     // Fecha o menu ao clicar fora dele
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (!navToggle.contains(e.target) && !navList.contains(e.target)) {
             navList.classList.remove('active');
             navToggle.classList.remove('active');
@@ -205,9 +215,9 @@ function initializeNavigation() {
  * Inicializa o formulário de contato
  */
 function initializeContactForm() {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         // Coleta os dados do formulário
         const formData = new FormData(this);
         const data = {
@@ -215,12 +225,12 @@ function initializeContactForm() {
             email: formData.get('email'),
             message: formData.get('message')
         };
-        
+
         // Validação básica
         if (!validateForm(data)) {
             return;
         }
-        
+
         // Simula o envio do formulário
         submitForm(data);
     });
@@ -237,20 +247,20 @@ function validateForm(data) {
         showFormError('Nome deve ter pelo menos 2 caracteres');
         return false;
     }
-    
+
     // Validação do email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!data.email || !emailRegex.test(data.email)) {
         showFormError('Por favor, insira um email válido');
         return false;
     }
-    
+
     // Validação da mensagem
     if (!data.message || data.message.trim().length < 10) {
         showFormError('Mensagem deve ter pelo menos 10 caracteres');
         return false;
     }
-    
+
     return true;
 }
 
@@ -264,7 +274,7 @@ function showFormError(message) {
     if (existingError) {
         existingError.remove();
     }
-    
+
     // Cria e exibe nova mensagem de erro
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
@@ -277,9 +287,9 @@ function showFormError(message) {
         text-align: center;
     `;
     errorDiv.textContent = message;
-    
+
     contactForm.appendChild(errorDiv);
-    
+
     // Remove a mensagem após 5 segundos
     setTimeout(() => {
         errorDiv.remove();
@@ -296,27 +306,27 @@ function submitForm(data) {
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.textContent = currentLanguage === 'pt' ? 'Enviando...' : 'Sending...';
-    
+
     // Simula delay de envio
     setTimeout(() => {
         // Exibe mensagem de sucesso
         successMessage.classList.add('show');
-        
+
         // Limpa o formulário
         contactForm.reset();
-        
+
         // Restaura o botão
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
-        
+
         // Remove a mensagem de sucesso após 5 segundos
         setTimeout(() => {
             successMessage.classList.remove('show');
         }, 5000);
-        
+
         // Log dos dados (em produção, aqui seria feita a requisição real)
         console.log('Dados do formulário enviados:', data);
-        
+
     }, 1500);
 }
 
@@ -326,18 +336,18 @@ function submitForm(data) {
 function initializeSmoothScrolling() {
     // Adiciona comportamento de scroll suave para links internos
     const internalLinks = document.querySelectorAll('a[href^="#"]');
-    
+
     internalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
-            
+
             if (targetElement) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
                 const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -360,26 +370,6 @@ function loadSavedLanguage() {
 // Carrega idioma salvo quando a página carrega
 document.addEventListener('DOMContentLoaded', loadSavedLanguage);
 
-// Adiciona listener para mudanças de tamanho da tela
-window.addEventListener('resize', function() {
-    // Fecha o menu mobile se a tela ficar grande
-    if (window.innerWidth > 768) {
-        navList.classList.remove('active');
-        navToggle.classList.remove('active');
-    }
-});
-
-// Adiciona efeito de parallax sutil no scroll (opcional)
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const sections = document.querySelectorAll('.section');
-    
-    sections.forEach(section => {
-        const rate = scrolled * -0.5;
-        section.style.transform = `translateY(${rate}px)`;
-    });
-});
-
 // Função utilitária para debounce (otimização de performance)
 function debounce(func, wait) {
     let timeout;
@@ -394,7 +384,7 @@ function debounce(func, wait) {
 }
 
 // Aplica debounce ao evento de resize
-window.addEventListener('resize', debounce(function() {
+window.addEventListener('resize', debounce(function () {
     // Recalcula layouts se necessário
     console.log('Tela redimensionada');
 }, 250));
