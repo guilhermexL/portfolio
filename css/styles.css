@@ -1,4 +1,5 @@
 /* Reset e configurações base */
+
 * {
     margin: 0;
     padding: 0;
@@ -18,6 +19,7 @@ body {
 }
 
 /* Container principal */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -25,6 +27,7 @@ body {
 }
 
 /* Header */
+
 .header {
     background-color: #1e1e1e;
     position: fixed;
@@ -49,18 +52,21 @@ body {
 }
 
 /* Botão de alternância de idioma */
+
 .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     background: none;
     border: 1px solid #333;
     color: #e0e0e0;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 4px;
     cursor: pointer;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.9rem;
+    text-decoration: none;
     transition: all 0.3s ease;
-    position: absolute;
-    right: 200px;
 }
 
 .language-toggle:hover {
@@ -84,6 +90,7 @@ body {
 }
 
 /* Navegação */
+
 .nav {
     position: relative;
 }
@@ -109,6 +116,11 @@ body {
     display: flex;
     list-style: none;
     gap: 2rem;
+}
+
+.nav-list li {
+    display: flex;
+    align-items: center;
 }
 
 .nav-list a {
@@ -139,6 +151,7 @@ body {
 }
 
 /* Seções principais */
+
 .section {
     padding: 6rem 0;
     margin-top: 80px;
@@ -157,6 +170,7 @@ body {
 }
 
 /* Seção Sobre */
+
 .about-content {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -180,6 +194,7 @@ body {
 }
 
 /* Seção Projetos */
+
 .projects {
     background-color: #1e1e1e;
 }
@@ -243,6 +258,7 @@ body {
 }
 
 /* Seção Habilidades */
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -283,6 +299,7 @@ body {
 }
 
 /* Seção Contato */
+
 .contact {
     background-color: #1e1e1e;
 }
@@ -368,6 +385,7 @@ body {
 }
 
 /* Footer */
+
 .footer {
     background-color: #0a0a0a;
     padding: 2rem 0;
@@ -399,13 +417,23 @@ body {
 }
 
 /* Responsividade */
+
 @media (max-width: 768px) {
+
     .container {
         padding: 0 15px;
     }
+
+    .logo {
+        order: 1;
+        white-space: nowrap;
+    }
     
     .header-content {
-        flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
     }
     
     .language-toggle {
@@ -421,6 +449,8 @@ body {
     }
     
     .nav-toggle {
+        order: 2;
+        margin-left: auto;
         display: flex;
     }
     
@@ -494,6 +524,7 @@ body {
 }
 
 /* Animações de entrada */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -510,6 +541,7 @@ body {
 }
 
 /* Estados de foco para acessibilidade */
+
 button:focus,
 input:focus,
 textarea:focus,
@@ -519,6 +551,7 @@ a:focus {
 }
 
 /* Melhorias de contraste */
+
 ::selection {
     background-color: #4CAF50;
     color: white;
