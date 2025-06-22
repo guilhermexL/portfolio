@@ -150,6 +150,14 @@ body {
     width: 100%;
 }
 
+/* Boas Vindas */
+
+.hello-users {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Seções principais */
 
 .section {
