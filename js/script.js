@@ -15,10 +15,19 @@ const translations = {
         'xp-title': 'Experiência',
         'about-education' : 'Formação',
         'projects-title': 'Projetos',
-        'project1-title': 'Sistema de E-commerce',
-        'project1-description': 'Plataforma completa de e-commerce desenvolvida com Spring Boot, PostgreSQL e AWS. Inclui sistema de pagamentos, gestão de estoque e painel administrativo.',
+
+        'project1-title': 'FanPage do Corinthians',
+        'project1-description': 'Plataforma completa de FanPage desenvolvida com Java, Spring Boot, MongoDB e Angular. Inclui sistema de notícias, equipe e partidas.',
+
         'project2-title': 'API de Gerenciamento de Tarefas',
         'project2-description': 'REST API robusta para gerenciamento de tarefas com autenticação JWT, documentação Swagger e deploy automatizado via Docker.',
+
+        'project3-title': 'Blog Pessoal',
+        'project3-description': 'Uma aplicação full-stack para registrar atividades diárias em formato de entradas de blog. Desenvolvida com React.js, Node.js e MongoDB.',
+
+        'project4-title': 'Portfólio',
+        'project4-description': 'Página Web do portfólio',
+
         'project-link': 'Ver Projeto →',
         'skills-title': 'Habilidades',
         'skills-backend': 'Backend',
@@ -49,10 +58,19 @@ const translations = {
         'xp-title': 'Experience',
         'about-education' : 'Graduate',
         'projects-title': 'Projects',
-        'project1-title': 'E-commerce System',
-        'project1-description': 'Complete e-commerce platform developed with Spring Boot, PostgreSQL and AWS. Includes payment system, inventory management and administrative panel.',
+
+        'project1-title': 'Corinthians FanPage',
+        'project1-description': 'Complete FanPage platform developed with Java, Spring Boot, MongoDB and Angular. Includes news system, team and matches.',
+
         'project2-title': 'Task Management API',
         'project2-description': 'Robust REST API for task management with JWT authentication, Swagger documentation and automated deployment via Docker.',
+
+        'project3-title': 'Personal blog',
+        'project3-description': 'A full-stack application for recording daily activities in the form of blog entries. Developed with React.js, Node.js and MongoDB.',
+
+        'project4-title': 'Portfolio',
+        'project4-description': 'Portfolio web page.',
+
         'project-link': 'View Project →',
         'skills-title': 'Skills',
         'skills-backend': 'Backend',
@@ -60,7 +78,7 @@ const translations = {
         'skills-cloud': 'Cloud & DevOps',
         'skills-tools': 'Tools',
         'contact-title': 'Contact',
-        'contact-description': 'Interested in working together? Get in touch with me through the form or social media. Let\'s talk about your next project!',
+        'contact-description': 'Get in touch with me through the form or social media.',
         'form-name': 'Name',
         'form-email': 'Email',
         'form-message': 'Message',
@@ -88,9 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeSmoothScrolling();
 });
 
-/**
- * Inicializa o sistema de alternância de idiomas
- */
+/* Inicializa o sistema de alternância de idiomas */
 function initializeLanguageToggle() {
     // Event listener para o botão de alternância de idioma
     languageToggle.addEventListener('click', function () {
